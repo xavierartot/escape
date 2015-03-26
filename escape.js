@@ -1,5 +1,5 @@
 /*
- ** v3
+ ** v4
  *************TODO****************
  ** - Nothing.                  **
  *********************************
@@ -106,7 +106,7 @@ function gameLoop() { // main game loop
         else if (time < 60) {
             time += " seconds.";
         }
-        var message = "You lost! Your survived for " + time; // loss message
+        var message = "You lost! You survived for " + time; // loss message
         ctx.font = "normal 32px Verdana"; // sets font
         ctx.fillStyle = "#0000FF"; // blue
         ctx.fillText(message, 125, 250); // displays message
