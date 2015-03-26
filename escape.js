@@ -112,7 +112,7 @@ function gameLoop() { // main game loop
         var message = "You lost! You survived for " + time; // loss message
         ctx.font = "normal 32px Verdana"; // sets font
         ctx.fillStyle = "#0000FF"; // blue
-        ctx.fillText(message, 125, 250); // displays message
+        ctx.fillText(message, 50, 250); // displays message
         ctx.font = "normal 24px Verdana"; // sets font
         ctx.fillStyle = "#0000FF"; // blue
         ctx.fillText("Press space to play again.", 250, 300); // displays message
