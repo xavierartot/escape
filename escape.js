@@ -1,5 +1,5 @@
 /*
- ** v7
+ ** v8
  *************TODO****************
  ** - This has been moved to the** 
  **  GitHub repository's TODO.md**
@@ -115,7 +115,7 @@ function gameLoop() { // main game loop
         ctx.fillText(message, 50, 250); // displays message
         ctx.font = "normal 24px Verdana"; // sets font
         ctx.fillStyle = "#0000FF"; // blue
-        ctx.fillText("Press space to play again.", 250, 300); // displays message
+        ctx.fillText("Press space to play again.", 200, 300); // displays message
     }
     window.requestAnimationFrame(gameLoop); // does it all again
 }
