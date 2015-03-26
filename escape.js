@@ -1,7 +1,8 @@
 /*
  ** v4
  *************TODO****************
- ** - Nothing.                  **
+ ** - This has been moved to the** 
+ **  GitHub repository's TODO.md**
  *********************************
  */
 window.onload = init; // called when all everything is ready
