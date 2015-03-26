@@ -1,5 +1,5 @@
 /*
- ** v2
+ ** v3
  *************TODO****************
  ** - Nothing.                  **
  *********************************
@@ -98,7 +98,15 @@ function gameLoop() { // main game loop
     } else if (lost) { // if player lost
         c.height = c.height; // clears canvas
         background.render(); // renders background
-        var message = "You lost! Your time was " + timer.getTime() + " seconds."; // loss message
+        var time = timer.getTime();
+        if (time >= 60) {
+            time /= 60;
+            time += " minutes.";
+        }
+        else if (time < 60) {
+            time += " seconds.";
+        }
+        var message = "You lost! Your survived for " + time; // loss message
         ctx.font = "normal 32px Verdana"; // sets font
         ctx.fillStyle = "#0000FF"; // blue
         ctx.fillText(message, 125, 250); // displays message
