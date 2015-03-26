@@ -9,8 +9,8 @@ window.onload = init; // called when all everything is ready
 
 function init() {
     c = document.getElementById("gameCanvas"); // gets canvas
-    c.width = 720; // sets dimensions
-    c.height = 500; // ^
+    c.width = cWidth; // sets dimensions
+    c.height = cHeight; // ^
     ctx = c.getContext("2d"); // gets 2D context
     gameLoop(); // calls main loop
     setTimeout(function() { // hides instructions
@@ -21,7 +21,9 @@ function init() {
 var c, ctx, // misc vars
     then = Date.now(),
     lost = false,
-    keysDown = {};
+    keysDown = {},
+    cWidth = 720,
+    cHeight = 500;
 var player = {
     x: 15, // player x position
     y: 15, // player y position
@@ -34,15 +36,15 @@ var player = {
             player.x -= 280 * m;
         if (38 in keysDown && player.y > 5)
             player.y -= 280 * m;
-        if (39 in keysDown && player.x < 705)
+        if (39 in keysDown && player.x < cWidth - 15)
             player.x += 280 * m;
-        if (40 in keysDown && player.y < 485)
+        if (40 in keysDown && player.y < 485 cHeight - 15)
             player.y += 280 * m;
     }
 };
 var enemy = {
-    x: 695, // enemy x position
-    y: 475, // enemy y position
+    x: cWidth - 25, // enemy x position
+    y: cHeight - 25, // enemy y position
     speed: 3, // enemy speed
     render: function() { // renders enemy
         ctx.fillStyle = "#0000FF"; // blue
@@ -63,7 +65,7 @@ var background = {
     color: "#101010", // dark dark dark gray
     render: function() { // renders background
         ctx.fillStyle = background.color;
-        ctx.fillRect(0, 0, 720, 500);
+        ctx.fillRect(0, 0, cWidth, cHeight);
     }
 };
 
@@ -94,7 +96,7 @@ function gameLoop() { // main game loop
         enemy.move(); // enemy movement
         then = now; // more time deltas
         ctx.fillStyle = "#0000FF"; // blue
-        ctx.fillText(fps.get() + " FPS", 680, 15); // displays FPS
+        ctx.fillText(fps.get() + " FPS", cWidth - 40, 15); // displays FPS
         ctx.fillText("Time: " + timer.getTime(), 20, 12); // displays player time
     } else if (lost) { // if player lost
         c.height = c.height; // clears canvas
