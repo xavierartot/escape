@@ -38,7 +38,7 @@ var player = {
             player.y -= 280 * m;
         if (39 in keysDown && player.x < cWidth - 15)
             player.x += 280 * m;
-        if (40 in keysDown && player.y < 485 cHeight - 15)
+        if (40 in keysDown && player.y < cHeight - 15)
             player.y += 280 * m;
     }
 };
