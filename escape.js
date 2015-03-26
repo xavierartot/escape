@@ -1,34 +1,34 @@
 /*
- ** v1
+ ** v2
  *************TODO****************
  ** - Nothing.                  **
  *********************************
  */
-window.onload = init;
+window.onload = init; // called when all everything is ready
 
 function init() {
-    c = document.getElementById("gameCanvas");
-    c.width = 720;
-    c.height = 500;
-    ctx = c.getContext("2d");
-    gameLoop();
-    setTimeout(function() {
+    c = document.getElementById("gameCanvas"); // gets canvas
+    c.width = 720; // sets dimensions
+    c.height = 500; // ^
+    ctx = c.getContext("2d"); // gets 2D context
+    gameLoop(); // calls main loop
+    setTimeout(function() { // hides instructions
         $("#inst").fadeOut(750);
     }, 3500);
-    setInterval(timeLoop, 10);
+    setInterval(timeLoop, 10); // timer loop
 }
-var c, ctx,
+var c, ctx, // misc vars
     then = Date.now(),
     lost = false,
     keysDown = {};
 var player = {
-    x: 15,
-    y: 15,
-    render: function() {
+    x: 15, // player x position
+    y: 15, // player y position
+    render: function() { // renders player
         ctx.fillStyle = "#FF0000"; // red
         ctx.fillRect(player.x, player.y, 10, 10);
     },
-    move: function(m) {
+    move: function(m) { // moves player, while keeping them from leaving.
         if (37 in keysDown && player.x > 5)
             player.x -= 280 * m;
         if (38 in keysDown && player.y > 5)
@@ -40,14 +40,14 @@ var player = {
     }
 };
 var enemy = {
-    x: 695,
-    y: 475,
-    speed: 3,
-    render: function() {
+    x: 695, // enemy x position
+    y: 475, // enemy y position
+    speed: 3, // enemy speed
+    render: function() { // renders enemy
         ctx.fillStyle = "#0000FF"; // blue
         ctx.fillRect(enemy.x, enemy.y, 10, 10);
     },
-    move: function() {
+    move: function() { // moves enemy towards player
         if (enemy.x < player.x)
             enemy.x += enemy.speed;
         if (enemy.x > player.x)
@@ -59,57 +59,57 @@ var enemy = {
     }
 };
 var background = {
-    color: "#101010",
-    render: function() {
+    color: "#101010", // dark dark dark gray
+    render: function() { // renders background
         ctx.fillStyle = background.color;
         ctx.fillRect(0, 0, 720, 500);
     }
 };
 
-function timeLoop() {
+function timeLoop() { // if player hasn't lost, increment timer.
     if (!lost)
         timer.increment();
 }
 var timer = {
-    count: 0,
+    count: 0, // timer count
     increment: function() {
         timer.count++;
     },
     getTime: function(type) {
-        return timer.count / 100;
+        return timer.count / 100; // timer count is actually hundredths of a second. This displays it as x.xx
     }
 };
 
-function gameLoop() {
-    if (!lost) {
-        c.height = c.height;
-        background.render();
-        player.render();
-        enemy.render();
-        checkCollisions();
-        var now = Date.now();
-        var delta = now - then;
-        player.move(delta / 1000);
-        enemy.move();
-        then = now;
+function gameLoop() { // main game loop
+    if (!lost) { // if player hasn't lost
+        c.height = c.height; // clears canvas
+        background.render(); // renders background
+        player.render(); // renders player
+        enemy.render(); // renders enemy
+        checkCollisions(); // checks for collisions between player and enemy
+        var now = Date.now(); // time delta stuff used for player movement
+        var delta = now - then; // ^
+        player.move(delta / 1000); // player movement
+        enemy.move(); // enemy movement
+        then = now; // more time deltas
         ctx.fillStyle = "#0000FF"; // blue
-        ctx.fillText(fps.get() + " FPS", 680, 15);
-        ctx.fillText("Time: " + timer.getTime(), 20, 12);
-    } else if (lost) {
-        c.height = c.height;
-        background.render();
-        var message = "You lost! Your time was " + timer.getTime() + " seconds.";
-        ctx.font = "normal 32px Verdana";
-        ctx.fillStyle = "#0000FF";
-        ctx.fillText(message, 125, 250);
-        ctx.font = "normal 24px Verdana";
-        ctx.fillStyle = "#0000FF";
-        ctx.fillText("Press space to play again.", 250, 300);
+        ctx.fillText(fps.get() + " FPS", 680, 15); // displays FPS
+        ctx.fillText("Time: " + timer.getTime(), 20, 12); // displays player time
+    } else if (lost) { // if player lost
+        c.height = c.height; // clears canvas
+        background.render(); // renders background
+        var message = "You lost! Your time was " + timer.getTime() + " seconds."; // loss message
+        ctx.font = "normal 32px Verdana"; // sets font
+        ctx.fillStyle = "#0000FF"; // blue
+        ctx.fillText(message, 125, 250); // displays message
+        ctx.font = "normal 24px Verdana"; // sets font
+        ctx.fillStyle = "#0000FF"; // blue
+        ctx.fillText("Press space to play again.", 250, 300); // displays message
     }
-    window.requestAnimationFrame(gameLoop);
+    window.requestAnimationFrame(gameLoop); // does it all again
 }
 
-function checkCollisions() {
+function checkCollisions() { // checks for collisions between player and enemy
     if (
         player.x <= (enemy.x + 10) &&
         enemy.x <= (player.x + 10) &&
@@ -118,7 +118,7 @@ function checkCollisions() {
     )
         lose();
 }
-var fps = {
+var fps = { // FPS counter. I did not write this, I found it at http://www.html5gamedevs.com/topic/1828-how-to-calculate-fps-in-plain-javascript/
     startTime: 0,
     frameNumber: 0,
     get: function() {
@@ -134,16 +134,16 @@ var fps = {
     }
 };
 
-function lose() {
+function lose() { // I think it is obvious what this does.
     lost = true;
 }
-addEventListener("keydown", function(e) {
+addEventListener("keydown", function(e) { // on keydown, add pressed key to keysDown
     keysDown[e.keyCode] = true;
 }, false);
-addEventListener("keyup", function(e) {
+addEventListener("keyup", function(e) { // on keyup, removes pressed key from keysDown
     delete keysDown[e.keyCode];
 }, false);
-window.onkeypress = function(e) {
+window.onkeypress = function(e) { // checks for player pressing space; if so, reload the page.
     if (e.keyCode == 32)
         window.location.assign(window.location);
 };
